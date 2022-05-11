@@ -1,0 +1,21 @@
+name: ".NET project version updater"
+description: "Update or bump project versions in .csproj, .cs, and .nuspec files"
+author: "vers-one"
+branding:
+    icon: "rotate-cw"
+    color: "blue"
+inputs:
+  file:
+    description: "Project file path"
+    required: true
+  version:
+    description: "New version"
+    required: true
+outputs:
+  oldVersion:
+    description: "Version found in the file before the update"
+  newVersion:
+    description: "Version set by the action during the update"
+runs:
+  using: "node16"
+  main: "dist/index.js"
