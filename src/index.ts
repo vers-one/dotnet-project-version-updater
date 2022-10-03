@@ -5,14 +5,21 @@ async function run(): Promise<void>
 {
     try
     {
-        const filePath: string = Core.getInput("file");
+        let filePathPattern: string = Core.getInput("file");
+        if (!filePathPattern)
+        {
+            filePathPattern = Core.getInput("files");
+        }
         const newVersion: string = Core.getInput("version");
-        console.log(`File path: ${filePath}`);
+        console.log(`File path pattern: ${filePathPattern}`);
         console.log(`New version: ${newVersion}`);
-        const updateResult: UpdateResult = await Updater.update(filePath, newVersion); 
-        console.log(`Version updated from ${updateResult.oldVersion} to ${updateResult.newVersion}`);
-        setOutput("oldVersion", updateResult.oldVersion);
-        setOutput("newVersion", updateResult.newVersion);
+        const updateResults: UpdateResult[] = await Updater.update(filePathPattern, newVersion);
+        for (const updateResult of updateResults)
+        {
+            console.log(`${updateResult.filePath}: version updated from ${updateResult.oldVersion} to ${updateResult.newVersion}`);
+        }
+        setOutput("oldVersion", updateResults[0].oldVersion);
+        setOutput("newVersion", updateResults[0].newVersion);
     }
     catch (error)
     {

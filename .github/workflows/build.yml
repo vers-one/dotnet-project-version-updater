@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Compile TypeScript files
+      run: npm run build
+
+    - name: Package compiled files into single JS file
+      run: npm run package
+
+    - name: Commit packaged files
+      run: |
+        git config user.name "vers-one"
+        git config user.email "vers-one@users.noreply.github.com"
+        CHANGED_FILES=$(git diff --name-only)
+        if [[ ${CHANGED_FILES} ]]; then
+          git add .
+          git commit -m "Automatic dist build"
+          git push
+        else
+          echo "No changed files to commit."
+        fi
