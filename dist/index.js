@@ -113,7 +113,7 @@ async function update(filePathPattern, newVersion) {
 async function updateFile(filePath, versionUpdateRule) {
     let regexes;
     const lowerCaseFilePath = filePath.toLowerCase();
-    if (lowerCaseFilePath.endsWith(".csproj") || lowerCaseFilePath.endsWith(".prop") || lowerCaseFilePath.endsWith(".nuspec")) {
+    if (lowerCaseFilePath.endsWith(".csproj") || lowerCaseFilePath.endsWith(".props") || lowerCaseFilePath.endsWith(".nuspec")) {
         regexes = [VERSION_TAG_REGEX];
     }
     else if (lowerCaseFilePath.endsWith(".cs")) {
