@@ -56,7 +56,7 @@ async function updateFile(filePath: string, versionUpdateRule: VersionUpdateRule
 {
     let regexes: RegExp[];
     const lowerCaseFilePath = filePath.toLowerCase();
-    if (lowerCaseFilePath.endsWith(".csproj") || lowerCaseFilePath.endsWith(".prop") || lowerCaseFilePath.endsWith(".nuspec"))
+    if (lowerCaseFilePath.endsWith(".csproj") || lowerCaseFilePath.endsWith(".props") || lowerCaseFilePath.endsWith(".nuspec"))
     {
         regexes = [ VERSION_TAG_REGEX ];
     }

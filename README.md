@@ -1,6 +1,6 @@
 # .NET project version updater
 
-A GitHub action to update or bump project versions in .csproj, .cs, .prop, and .nuspec files.
+A GitHub action to update or bump project versions in .csproj, .cs, .props, and .nuspec files.
 
 [![Build](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/build.yml/badge.svg)](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/build.yml)
 [![Tests](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/test.yml/badge.svg)](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/test.yml)
@@ -8,7 +8,7 @@ A GitHub action to update or bump project versions in .csproj, .cs, .prop, and .
 Supports:
 
 * .NET / .NET Core projects (`.csproj` files);
-* Shared project properties (`.prop` files);
+* Shared project properties (`.props` files);
 * .NET Framework AssemblyInfo files (`AssemblyInfo.cs`);
 * Nuget package specs (`.nuspec` files).
 
@@ -111,7 +111,7 @@ jobs:
 
       - name: Set MyProject.csproj version
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.1
+        uses: vers-one/dotnet-project-version-updater@v1.2
         with:
           file: "src/MyProject.csproj"
           version: ${{ github.event.inputs.version }}
@@ -147,7 +147,7 @@ jobs:
 
       - name: Set project versions
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.1
+        uses: vers-one/dotnet-project-version-updater@v1.2
         with:
           file: |
             "**/*.csproj", "**/*.nuspec", "**/AssemblyInfo.cs"
@@ -191,7 +191,7 @@ jobs:
 
       - name: Bump build version
         id: bump
-        uses: vers-one/dotnet-project-version-updater@v1.1
+        uses: vers-one/dotnet-project-version-updater@v1.2
         with:
           file: "src/MyProject.csproj"
           version: bump-build
@@ -207,7 +207,7 @@ jobs:
 ## A few notes on version numbers
 
 * This action searches for the following version declarations:
-  * for .csproj, .prop, and .nuspec files: `<Version>...</Version>` (case insensitive);
+  * for .csproj, .props, and .nuspec files: `<Version>...</Version>` (case insensitive);
   * for .cs files: `[assembly: AssemblyVersion("...")]` and `[assembly: AssemblyFileVersion("...")]`.
 * If you set the new version explicitly, you can use any string as a version number (e.g. `1.2.3`, `1.0.0-beta5`, `Vista`, `blah-blah`, etc). However if you use one of the bump commands or a bump pattern, the existing version must by in the following format: *major[.minor[.build[.revision]]]*.
 * Keep in mind that .NET Framework assembly versions [must be](https://docs.microsoft.com/en-us/dotnet/api/system.version#remarks) in the following format: *major.minor[.build[.revision]]*. Any other versions formats like `1.0.0-beta5` will cause a compilation failure.

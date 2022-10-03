@@ -86,7 +86,7 @@ test.serial("Update all files test", async t =>
     t.is(updateResults.length, 4);
     t.true(updateResults.find(updateResult => updateResult.filePath === "test-files/Test.csproj") !== undefined);
     t.true(updateResults.find(updateResult => updateResult.filePath === "test-files/Test.nuspec") !== undefined);
-    t.true(updateResults.find(updateResult => updateResult.filePath === "test-files/Test.prop") !== undefined);
+    t.true(updateResults.find(updateResult => updateResult.filePath === "test-files/Test.props") !== undefined);
     t.true(updateResults.find(updateResult => updateResult.filePath === "test-files/Test.cs") !== undefined);
     t.is(updateResults[0].newVersion, "4.5.6");
     t.is(updateResults[1].newVersion, "4.5.6");
@@ -96,7 +96,7 @@ test.serial("Update all files test", async t =>
         "<Project Sdk=\"Microsoft.NET.Sdk\">\n    <PropertyGroup>\n        <Version>4.5.6</Version>\n    </PropertyGroup>\n</Project>\n");
     t.is(await getFileContent("test-files/Test.nuspec"), 
         "<?xml version=\"1.0\"?>\n<package>\n    <metadata>\n        <version>4.5.6</version>\n    </metadata>\n</package>\n");
-    t.is(await getFileContent("test-files/Test.prop"),
+    t.is(await getFileContent("test-files/Test.props"),
         "<Project>\n    <PropertyGroup>\n        <Version>4.5.6</Version>\n    </PropertyGroup>\n</Project>\n");
     t.is(await getFileContent("test-files/Test.cs"),
         "[assembly: AssemblyVersion(\"4.5.6\")]\n[assembly: AssemblyFileVersion(\"4.5.6\")]\n");

@@ -1,5 +1,5 @@
 name: ".NET project version updater"
-description: "Update or bump project versions in .csproj, .cs, .prop, and .nuspec files"
+description: "Update or bump project versions in .csproj, .cs, .props, and .nuspec files"
 author: "vers-one"
 branding:
     icon: "rotate-cw"
