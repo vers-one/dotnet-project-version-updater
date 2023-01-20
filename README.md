@@ -62,7 +62,7 @@ Examples:
 |1.1.1.1    |`*.*.*.^`      |1.1.1.2    |Bumps the revision part, leaves other parts unchanged                                                            |
 |1.1.45     |`*.^.^`        |1.2.46     |Bumps the minor and the build parts, leaves the major part unchanged                                             |
 |1.1.45     |`^.0.^`        |2.0.46     |Bumps the major and the build parts, sets the minor part to zero                                                 |
-|1.1.1.1    |`*.*`          |1.1        |Removes the build and the revision parts, leave the major and the minor parts unchanged                          |
+|1.1.1.1    |`*.*`          |1.1        |Removes the build and the revision parts, leaves the major and the minor parts unchanged                         |
 |1.1.7      |`*.^.0`        |1.2.0      |Bumps the minor part, sets the build part to zero, and leaves the major part unchanged                           |
 |1.1.7.1    |`*.^.0`        |1.2.0      |Bumps the minor part, sets the build part to zero, removes the revision part, and leaves the major part unchanged|
 |1.1.7      |`*.*.*.1`      |1.1.7.1    |Sets the revision part to 1, leaves other parts unchanged                                                        |
