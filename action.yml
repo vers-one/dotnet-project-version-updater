@@ -1,12 +1,12 @@
 name: ".NET project version updater"
-description: "Update or bump project versions in .csproj, .cs, .props, and .nuspec files"
+description: "Update or bump project versions in .csproj, .props, .nuspec, and many other .NET file types"
 author: "vers-one"
 branding:
     icon: "rotate-cw"
     color: "blue"
 inputs:
   file:
-    description: "Project file path"
+    description: "Project file paths"
     required: true
   version:
     description: "New version"

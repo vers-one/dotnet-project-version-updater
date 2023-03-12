@@ -1,7 +1,7 @@
 {
   "name": "dotnet-project-version-updater",
-  "version": "1.0.0",
-  "description": "A GitHub action to update or bump project versions in .csproj, .cs, .props, and .nuspec files",
+  "version": "1.3.0",
+  "description": "A GitHub action to update or bump project versions. Supports .csproj, .props, .nuspec, and many other .NET file types.",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
@@ -24,14 +24,14 @@
   },
   "homepage": "https://github.com/vers-one/dotnet-project-version-updater",
   "dependencies": {
-    "@actions/core": "^1.7.0",
-    "@actions/github": "^5.0.1",
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
     "fast-glob": "^3.2.12"
   },
   "devDependencies": {
-    "@types/node": "^17.0.30",
-    "@vercel/ncc": "^0.33.4",
-    "ava": "^4.3.3",
-    "typescript": "^4.6.4"
+    "@types/node": "^18.15.0",
+    "@vercel/ncc": "^0.36.1",
+    "ava": "^5.2.0",
+    "typescript": "^4.9.5"
   }
 }

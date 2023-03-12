@@ -1,5 +1,5 @@
 import * as Core from "@actions/core";
-import Updater, { UpdateResult } from "./updater";
+import Updater, { UpdaterResult } from "./updater";
 
 async function run(): Promise<void>
 {
@@ -13,13 +13,21 @@ async function run(): Promise<void>
         const newVersion: string = Core.getInput("version");
         console.log(`File path pattern: ${filePathPattern}`);
         console.log(`New version: ${newVersion}`);
-        const updateResults: UpdateResult[] = await Updater.update(filePathPattern, newVersion);
-        for (const updateResult of updateResults)
+        const updaterResults: UpdaterResult[] = await Updater.update(filePathPattern, newVersion);
+        let oldVersionString: string = "";
+        let newVersionString: string = "";
+        for (const updaterResult of updaterResults)
         {
-            console.log(`${updateResult.filePath}: version updated from ${updateResult.oldVersion} to ${updateResult.newVersion}`);
+            for (const updatedVersion of updaterResult.updatedVersions)
+            {
+                oldVersionString = updatedVersion.oldVersion;
+                newVersionString = updatedVersion.newVersion;
+                console.log(`${updaterResult.filePath} (${updaterResult.fileTypeName}): ` +
+                    `${updatedVersion.versionType} updated from '${oldVersionString}' to '${newVersionString}'`);
+            }
         }
-        setOutput("oldVersion", updateResults[0].oldVersion);
-        setOutput("newVersion", updateResults[0].newVersion);
+        Core.setOutput("oldVersion", oldVersionString);
+        Core.setOutput("newVersion", newVersionString);
     }
     catch (error)
     {
@@ -28,11 +36,6 @@ async function run(): Promise<void>
             Core.setFailed(error.message);
         }
     }
-}
-
-function setOutput(name: string, value: string): void
-{
-    console.log(`::set-output name=${name}::${value}`);
 }
 
 run();

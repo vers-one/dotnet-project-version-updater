@@ -3,7 +3,8 @@ const BUMP_MINOR_COMMAND = "bump-minor";
 const BUMP_BUILD_COMMAND = "bump-build";
 const BUMP_REVISION_COMMAND = "bump-revision";
 const VERSION_UPDATE_RULE_REGEX: RegExp = /(\?|\*|\^|\d+)\.?(\?|\*|\^|\d+)?\.?(\?|\*|\^|\d+)?\.?(\?|\*|\^|\d+)?/;
-const VERSION_NUMBER_REGEX: RegExp = /(\d+)\.?(\d+)?\.?(\d+)?\.?(\d+)?/;
+const VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX: RegExp = /(\d+)\.?(\d+)?\.?(\d+)?\.?(\d+)?/;
+const VERSION_NUMBER_WITH_COMMA_DELIMITER_REGEX: RegExp = /(\d+)\,?(\d+)?\,?(\d+)?\,?(\d+)?/;
 
 export interface VersionUpdateRule
 {
@@ -41,7 +42,7 @@ enum VersionPartUpdateMode
     REMOVE
 }
 
-interface Version
+export interface Version
 {
     major: number;
     minor: number | null;
@@ -72,7 +73,7 @@ function parseVersionUpdateRule(input: string): VersionUpdateRule
             input = "*.*.*.^";
             break;
     }
-    let matches: RegExpExecArray | null = VERSION_NUMBER_REGEX.exec(input);
+    let matches: RegExpExecArray | null = VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX.exec(input);
     if (matches && matches[0] === input)
     {
         result =
@@ -113,19 +114,38 @@ function parseVersionUpdateRule(input: string): VersionUpdateRule
     return result;
 }
 
-function getNewVersion(currentVersion: string, versionUpdateRule: VersionUpdateRule): string
+function updateNonParsedVersion(currentVersion: string, versionUpdateRule: VersionUpdateRule, versionNumberRegex: RegExp, versionPartDelimiter: string): string
 {
     if (versionUpdateRule.updateMode === VersionUpdateMode.SET_EXPLICIT_VERSION)
     {
         return versionUpdateRule.explicitVersion!;
     }
-    const version: Version = parseVersion(currentVersion);
-    const updatePattern: VersionUpdatePattern = versionUpdateRule.updatePattern!;
-    version.major = getNewVersionPart(version.major, updatePattern.major) ?? 0;
-    version.minor = getNewVersionPart(version.minor, updatePattern.minor);
-    version.build = getNewVersionPart(version.build, updatePattern.build);
-    version.revision = getNewVersionPart(version.revision, updatePattern.revision);
-    return formatVersion(version);
+    else
+    {
+        const currentParsedVersion: Version = parseVersion(currentVersion, versionNumberRegex);
+        const newParsedVersion = updateParsedVersion(currentParsedVersion, versionUpdateRule);
+        return formatVersion(newParsedVersion, versionPartDelimiter);
+    }
+}
+
+function updateParsedVersion(currentVersion: Version, versionUpdateRule: VersionUpdateRule): Version
+{
+    if (versionUpdateRule.updateMode === VersionUpdateMode.SET_EXPLICIT_VERSION)
+    {
+        return parseVersion(versionUpdateRule.explicitVersion!, VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX);
+    }
+    else
+    {
+        const updatePattern: VersionUpdatePattern = versionUpdateRule.updatePattern!;
+        const result =
+        {
+            major: getNewVersionPart(currentVersion.major, updatePattern.major) ?? 0,
+            minor: getNewVersionPart(currentVersion.minor, updatePattern.minor),
+            build: getNewVersionPart(currentVersion.build, updatePattern.build),
+            revision: getNewVersionPart(currentVersion.revision, updatePattern.revision)
+        }
+        return result;
+    }
 }
 
 function parseVersionPartUpdateRule(input: string): VersionPartUpdateRule
@@ -195,9 +215,9 @@ function getNewVersionPart(currentVersionPart: number | null, versionPartUpdateR
     }
 }
 
-function parseVersion(version: string): Version
+function parseVersion(version: string, versionNumberRegex: RegExp): Version
 {
-    const matches: RegExpExecArray | null = VERSION_NUMBER_REGEX.exec(version.trim());
+    const matches: RegExpExecArray | null = versionNumberRegex.exec(version.trim());
     if (matches && matches[0] === version)
     {
         const major: number = parseInt(matches[1]);
@@ -215,22 +235,22 @@ function parseVersion(version: string): Version
     }
     else
     {
-        throw new Error(`Unsupported version format: ${version}`);
+        throw new Error(`Version '${version}' doesn't match regular expression: ${versionNumberRegex}`);
     }
 }
 
-function formatVersion(version: Version): string
+function formatVersion(version: Version, versionPartDelimiter: string = ".", includeTrailingZeros: boolean = false): string
 {
     let result: string = version.major.toString();
-    if (version.minor !== null)
+    if (version.minor !== null || includeTrailingZeros)
     {
-        result += "." + version.minor;
-        if (version.build !== null)
+        result += versionPartDelimiter + (version.minor ?? 0);
+        if (version.build !== null || includeTrailingZeros)
         {
-            result += "." + version.build;
-            if (version.revision !== null)
+            result += versionPartDelimiter + (version.build ?? 0);
+            if (version.revision !== null || includeTrailingZeros)
             {
-                result += "." + version.revision;
+                result += versionPartDelimiter + (version.revision ?? 0);
             }
         }
     }
@@ -239,6 +259,11 @@ function formatVersion(version: Version): string
 
 export default
 {
+    VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX,
+    VERSION_NUMBER_WITH_COMMA_DELIMITER_REGEX,
+    formatVersion,
+    parseVersion,
     parseVersionUpdateRule,
-    getNewVersion
+    updateNonParsedVersion,
+    updateParsedVersion
 };
