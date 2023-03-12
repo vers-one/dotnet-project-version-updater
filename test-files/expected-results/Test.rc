@@ -1,0 +1,13 @@
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 4,5,6,0
+PRODUCTVERSION 4,5,6,0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileVersion", "4.5.6"
+            VALUE "ProductVersion", "4.5.6"
+        END
+    END
+END

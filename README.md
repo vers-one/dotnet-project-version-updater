@@ -1,16 +1,28 @@
 # .NET project version updater
 
-A GitHub action to update or bump project versions in .csproj, .cs, .props, and .nuspec files.
+A GitHub action to update or bump project versions. Supports .csproj, .props, .nuspec, and many other .NET file types.
 
 [![Build](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/build.yml/badge.svg)](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/build.yml)
 [![Tests](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/test.yml/badge.svg)](https://github.com/vers-one/dotnet-project-version-updater/actions/workflows/test.yml)
 
-Supports:
+Supported file types:
 
-* .NET / .NET Core projects (`.csproj` files);
-* Shared project properties (`.props` files);
-* .NET Framework AssemblyInfo files (`AssemblyInfo.cs`);
-* Nuget package specs (`.nuspec` files).
+* C#:
+  * `.csproj` (.NET / .NET Core projects)
+  * `.cs` (.NET Framework AssemblyInfo files, e.g. `AssemblyInfo.cs`)
+* Visual Basic:
+  * `.vbproj` (.NET / .NET Core projects)
+  * `.vb` (.NET Framework AssemblyInfo files, e.g. `AssemblyInfo.vb`)
+* F#:
+  * `.fsproj` (.NET / .NET Core projects)
+  * `.fs` (.NET Framework AssemblyInfo files, e.g. `AssemblyInfo.fs`)
+* C++/CLI:
+  * `.cpp` (.NET / .NET Core / .NET Framework AssemblyInfo files, e.g. `AssemblyInfo.cpp`)
+  * `.rc` (C++ resource files; also works for non-.NET C++ projects)
+* MSBuild:
+  * `.props` (shared project properties)
+* Nuget:
+  * `.nuspec` (Nuget package specs)
 
 ## Inputs
 
@@ -76,13 +88,13 @@ Examples:
 
 ### `oldVersion`
 
-The version found in the project file before the update. In case of multiple project files, this will be the version found in the first project file.
+The version found in the project file before the update. In case of multiple project files, this will be the version found in the last project file.
 
 **Example**: `1.3.5`
 
 ### `newVersion`
 
-The version set by the action during the update. In case of multiple project files, this will be the version written into the first project file.
+The version set by the action during the update. In case of multiple project files, this will be the version written into the last project file.
 
 **Example**: `1.3.6`
 
@@ -107,11 +119,11 @@ jobs:
     name: Update version
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set MyProject.csproj version
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.2
+        uses: vers-one/dotnet-project-version-updater@v1.3
         with:
           file: "src/MyProject.csproj"
           version: ${{ github.event.inputs.version }}
@@ -143,11 +155,11 @@ jobs:
     name: Update versions
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set project versions
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.2
+        uses: vers-one/dotnet-project-version-updater@v1.3
         with:
           file: |
             "**/*.csproj", "**/*.nuspec", "**/AssemblyInfo.cs"
@@ -176,12 +188,12 @@ jobs:
     name: Build and bump version
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install .NET 6
-        uses: actions/setup-dotnet@v1
+      - name: Install .NET 7
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 7
 
       - name: Restore dependencies
         run: dotnet restore
@@ -191,7 +203,7 @@ jobs:
 
       - name: Bump build version
         id: bump
-        uses: vers-one/dotnet-project-version-updater@v1.2
+        uses: vers-one/dotnet-project-version-updater@v1.3
         with:
           file: "src/MyProject.csproj"
           version: bump-build
@@ -204,10 +216,30 @@ jobs:
           git push
 ```
 
-## A few notes on version numbers
+## Additional notes
 
 * This action searches for the following version declarations:
-  * for .csproj, .props, and .nuspec files: `<Version>...</Version>` (case insensitive);
-  * for .cs files: `[assembly: AssemblyVersion("...")]` and `[assembly: AssemblyFileVersion("...")]`.
+  * for .csproj, .vbproj, .fsproj, .props, and .nuspec files:
+    * `<Version>...</Version>`;
+    * `<AssemblyVersion>...</AssemblyVersion>`;
+    * `<FileVersion>...</FileVersion>`;
+  * for .cs files:
+    * `[assembly: AssemblyVersion("...")]`;
+    * `[assembly: AssemblyFileVersion("...")]`;
+  * for .vb files:
+    * `<Assembly: AssemblyVersion("...")>`;
+    * `<Assembly: AssemblyFileVersion("...")>`;
+  * for .fs files:
+    * `[<assembly: AssemblyVersion("...")>]`;
+    * `[<assembly: AssemblyFileVersion("...")>]`;
+  * for .cpp files:
+    * `[assembly:AssemblyVersionAttribute(L"...")]`;
+    * `[assembly:AssemblyFileVersionAttribute(L"...")]`;
+  * for .rc files:
+    * `FILEVERSION x,x,x,x`;
+    * `PRODUCTVERSION x,x,x,x`;
+    * `VALUE "FileVersion", "..."`
+    * `VALUE "ProductVersion", "..."`.
 * If you set the new version explicitly, you can use any string as a version number (e.g. `1.2.3`, `1.0.0-beta5`, `Vista`, `blah-blah`, etc). However if you use one of the bump commands or a bump pattern, the existing version must by in the following format: *major[.minor[.build[.revision]]]*.
 * Keep in mind that .NET Framework assembly versions [must be](https://docs.microsoft.com/en-us/dotnet/api/system.version#remarks) in the following format: *major.minor[.build[.revision]]*. Any other versions formats like `1.0.0-beta5` will cause a compilation failure.
+* C++ resource files [require](https://learn.microsoft.com/en-us/windows/win32/menurc/versioninfo-resource#parameters) `FILEVERSION` and `PRODUCTVERSION` resource parameters to have all four version components (*major.minor.build.revision*).
