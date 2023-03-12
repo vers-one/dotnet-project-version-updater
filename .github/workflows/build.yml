@@ -28,6 +28,7 @@ jobs:
       run: npm run package
 
     - name: Commit packaged files
+      if: github.event_name != 'pull_request'
       run: |
         git config user.name "vers-one"
         git config user.email "vers-one@users.noreply.github.com"
