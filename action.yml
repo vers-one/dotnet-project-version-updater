@@ -17,5 +17,5 @@ outputs:
   newVersion:
     description: "Version set by the action during the update"
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
