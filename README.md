@@ -219,10 +219,13 @@ jobs:
 ## Additional notes
 
 * This action searches for the following version declarations:
-  * for .csproj, .vbproj, .fsproj, .props, and .nuspec files:
+  * for .csproj, .vbproj, .fsproj, and .props files:
     * `<Version>...</Version>`;
+    * `<VersionPrefix>...</VersionPrefix>`;
     * `<AssemblyVersion>...</AssemblyVersion>`;
     * `<FileVersion>...</FileVersion>`;
+  * for .nuspec files:
+    * `<Version>...</Version>`;
   * for .cs files:
     * `[assembly: AssemblyVersion("...")]`;
     * `[assembly: AssemblyFileVersion("...")]`;
