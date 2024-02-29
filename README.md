@@ -219,7 +219,7 @@ jobs:
 ## Additional notes
 
 * This action searches for the following version declarations:
-  * for .csproj, .vbproj, .fsproj and .props files:
+  * for .csproj, .vbproj, .fsproj, and .props files:
     * `<Version>...</Version>`;
     * `<VersionPrefix>...</VersionPrefix>`;
     * `<AssemblyVersion>...</AssemblyVersion>`;
