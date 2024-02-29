@@ -344,6 +344,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
 class CsProjPlugin extends plugin_1.default {
@@ -353,6 +354,11 @@ class CsProjPlugin extends plugin_1.default {
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
+            },
+            {
+                regex: VERSION_PREFIX_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<VersionPrefix> tag"
             },
             {
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
@@ -410,6 +416,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
 class FsProjPlugin extends plugin_1.default {
@@ -419,6 +426,11 @@ class FsProjPlugin extends plugin_1.default {
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
+            },
+            {
+                regex: VERSION_PREFIX_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<VersionPrefix> tag"
             },
             {
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
@@ -633,6 +645,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
 class PropsPlugin extends plugin_1.default {
@@ -642,6 +655,11 @@ class PropsPlugin extends plugin_1.default {
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
+            },
+            {
+                regex: VERSION_PREFIX_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<VersionPrefix> tag"
             },
             {
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
@@ -772,6 +790,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
 class VbProjPlugin extends plugin_1.default {
@@ -781,6 +800,11 @@ class VbProjPlugin extends plugin_1.default {
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
+            },
+            {
+                regex: VERSION_PREFIX_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<VersionPrefix> tag"
             },
             {
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
