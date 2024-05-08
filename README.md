@@ -94,48 +94,56 @@ Allows to refine the `file` / `files` filter to exclude the unwanted version dec
 
 Supported tags:
 
-|Tag                                   |Description                                                                   |
-|--------------------------------------|------------------------------------------------------------------------------|
-|`*`                                   |Process all supported version declarations in all supported file types        |
-|`csproj.*`                            |Process all supported version declarations in *.csproj* files                 |
-|`csproj.Version`                      |Process `<Version>...</Version>` item in *.csproj* files                      |
-|`csproj.VersionPrefix`                |Process `<VersionPrefix>...</VersionPrefix>` item in *.csproj* files          |
-|`csproj.AssemblyVersion`              |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.csproj* files      |
-|`csproj.FileVersion`                  |Process `<FileVersion>...</FileVersion>` item in *.csproj* files              |
-|`vbproj.*`                            |Process all supported version declarations in *.vbproj* files                 |
-|`vbproj.Version`                      |Process `<Version>...</Version>` item in *.vbproj* files                      |
-|`vbproj.VersionPrefix`                |Process `<VersionPrefix>...</VersionPrefix>` item in *.vbproj* files          |
-|`vbproj.AssemblyVersion`              |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.vbproj* files      |
-|`vbproj.FileVersion`                  |Process `<FileVersion>...</FileVersion>` item in *.vbproj* files              |
-|`fsproj.*`                            |Process all supported version declarations in *.fsproj* files                 |
-|`fsproj.Version`                      |Process `<Version>...</Version>` item in *.fsproj* files                      |
-|`fsproj.VersionPrefix`                |Process `<VersionPrefix>...</VersionPrefix>` item in *.fsproj* files          |
-|`fsproj.AssemblyVersion`              |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.fsproj* files      |
-|`fsproj.FileVersion`                  |Process `<FileVersion>...</FileVersion>` item in *.fsproj* files              |
-|`props.*`                             |Process all supported version declarations in *.props* files                  |
-|`props.Version`                       |Process `<Version>...</Version>` item in *.props* files                       |
-|`props.VersionPrefix`                 |Process `<VersionPrefix>...</VersionPrefix>` item in *.props* files           |
-|`props.AssemblyVersion`               |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.props* files       |
-|`props.FileVersion`                   |Process `<FileVersion>...</FileVersion>` item in *.props* files               |
-|`nuspec.*`                            |Process all supported version declarations in *.nuspec* files                 |
-|`nuspec.Version`                      |Process `<Version>...</Version>` item in *.nuspec* files                      |
-|`AssemblyInfo-cs.*`                   |Process all supported version declarations in *.cs* files                     |
-|`AssemblyInfo-cs.AssemblyVersion`     |Process `[assembly: AssemblyVersion("...")]` item in *.cs* files              |
-|`AssemblyInfo-cs.AssemblyFileVersion` |Process `[assembly: AssemblyFileVersion("...")]` item in *.cs* files          |
-|`AssemblyInfo-vb.*`                   |Process all supported version declarations in *.vb* files                     |
-|`AssemblyInfo-vb.AssemblyVersion`     |Process `<Assembly: AssemblyVersion("...")>` item in *.vb* files              |
-|`AssemblyInfo-vb.AssemblyFileVersion` |Process `<Assembly: AssemblyFileVersion("...")>` item in *.vb* files          |
-|`AssemblyInfo-fs.*`                   |Process all supported version declarations in *.fs* files                     |
-|`AssemblyInfo-fs.AssemblyVersion`     |Process `[<assembly: AssemblyVersion("...")>]` item in *.fs* files            |
-|`AssemblyInfo-fs.AssemblyFileVersion` |Process `[<assembly: AssemblyFileVersion("...")>]` item in *.fs* files        |
-|`AssemblyInfo-cpp.*`                  |Process all supported version declarations in *.cpp* files                    |
-|`AssemblyInfo-cpp.AssemblyVersion`    |Process `[assembly:AssemblyVersionAttribute(L"...")]` item in *.cpp* files    |
-|`AssemblyInfo-cpp.AssemblyFileVersion`|Process `[assembly:AssemblyFileVersionAttribute(L"...")]` item in *.cpp* files|
-|`rc.*`                                |Process all supported version declarations in *.rc* files                     |
-|`rc.FileVersion-param`                |Process `FILEVERSION x,x,x,x` item in *.rc* files                             |
-|`rc.ProductVersion-param`             |Process `PRODUCTVERSION x,x,x,x` item in *.rc* files                          |
-|`rc.FileVersion-string`               |Process `VALUE "FileVersion", "..."` item in *.rc* files                      |
-|`rc.ProductVersion-string`            |Process `VALUE "ProductVersion", "..."` item in *.rc* files                   |
+|Tag                                            |Description                                                                            |
+|-----------------------------------------------|---------------------------------------------------------------------------------------|
+|`*`                                            |Process all supported version declarations in all supported file types                 |
+|`csproj.*`                                     |Process all supported version declarations in *.csproj* files                          |
+|`csproj.Version`                               |Process `<Version>...</Version>` item in *.csproj* files                               |
+|`csproj.VersionPrefix`                         |Process `<VersionPrefix>...</VersionPrefix>` item in *.csproj* files                   |
+|`csproj.AssemblyVersion`                       |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.csproj* files               |
+|`csproj.FileVersion`                           |Process `<FileVersion>...</FileVersion>` item in *.csproj* files                       |
+|`csproj.InformationalVersion`                  |Process `<InformationalVersion>...</InformationalVersion>` item in *.csproj* files     |
+|`vbproj.*`                                     |Process all supported version declarations in *.vbproj* files                          |
+|`vbproj.Version`                               |Process `<Version>...</Version>` item in *.vbproj* files                               |
+|`vbproj.VersionPrefix`                         |Process `<VersionPrefix>...</VersionPrefix>` item in *.vbproj* files                   |
+|`vbproj.AssemblyVersion`                       |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.vbproj* files               |
+|`vbproj.FileVersion`                           |Process `<FileVersion>...</FileVersion>` item in *.vbproj* files                       |
+|`vbproj.InformationalVersion`                  |Process `<InformationalVersion>...</InformationalVersion>` item in *.vbproj* files     |
+|`fsproj.*`                                     |Process all supported version declarations in *.fsproj* files                          |
+|`fsproj.Version`                               |Process `<Version>...</Version>` item in *.fsproj* files                               |
+|`fsproj.VersionPrefix`                         |Process `<VersionPrefix>...</VersionPrefix>` item in *.fsproj* files                   |
+|`fsproj.AssemblyVersion`                       |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.fsproj* files               |
+|`fsproj.FileVersion`                           |Process `<FileVersion>...</FileVersion>` item in *.fsproj* files                       |
+|`fsproj.InformationalVersion`                  |Process `<InformationalVersion>...</InformationalVersion>` item in *.fsproj* files     |
+|`props.*`                                      |Process all supported version declarations in *.props* files                           |
+|`props.Version`                                |Process `<Version>...</Version>` item in *.props* files                                |
+|`props.VersionPrefix`                          |Process `<VersionPrefix>...</VersionPrefix>` item in *.props* files                    |
+|`props.AssemblyVersion`                        |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.props* files                |
+|`props.FileVersion`                            |Process `<FileVersion>...</FileVersion>` item in *.props* files                        |
+|`props.InformationalVersion`                   |Process `<InformationalVersion>...</InformationalVersion>` item in *.props* files      |
+|`nuspec.*`                                     |Process all supported version declarations in *.nuspec* files                          |
+|`nuspec.Version`                               |Process `<Version>...</Version>` item in *.nuspec* files                               |
+|`AssemblyInfo-cs.*`                            |Process all supported version declarations in *.cs* files                              |
+|`AssemblyInfo-cs.AssemblyVersion`              |Process `[assembly: AssemblyVersion("...")]` item in *.cs* files                       |
+|`AssemblyInfo-cs.AssemblyFileVersion`          |Process `[assembly: AssemblyFileVersion("...")]` item in *.cs* files                   |
+|`AssemblyInfo-cs.AssemblyInformationalVersion` |Process `[assembly: AssemblyInformationalVersion("...")]` item in *.cs* files          |
+|`AssemblyInfo-vb.*`                            |Process all supported version declarations in *.vb* files                              |
+|`AssemblyInfo-vb.AssemblyVersion`              |Process `<Assembly: AssemblyVersion("...")>` item in *.vb* files                       |
+|`AssemblyInfo-vb.AssemblyFileVersion`          |Process `<Assembly: AssemblyFileVersion("...")>` item in *.vb* files                   |
+|`AssemblyInfo-vb.AssemblyInformationalVersion` |Process `<Assembly: AssemblyInformationalVersion("...")>` item in *.vb* files          |
+|`AssemblyInfo-fs.*`                            |Process all supported version declarations in *.fs* files                              |
+|`AssemblyInfo-fs.AssemblyVersion`              |Process `[<assembly: AssemblyVersion("...")>]` item in *.fs* files                     |
+|`AssemblyInfo-fs.AssemblyFileVersion`          |Process `[<assembly: AssemblyFileVersion("...")>]` item in *.fs* files                 |
+|`AssemblyInfo-fs.AssemblyInformationalVersion` |Process `[<assembly: AssemblyInformationalVersion("...")>]` item in *.fs* files        |
+|`AssemblyInfo-cpp.*`                           |Process all supported version declarations in *.cpp* files                             |
+|`AssemblyInfo-cpp.AssemblyVersion`             |Process `[assembly:AssemblyVersionAttribute(L"...")]` item in *.cpp* files             |
+|`AssemblyInfo-cpp.AssemblyFileVersion`         |Process `[assembly:AssemblyFileVersionAttribute(L"...")]` item in *.cpp* files         |
+|`AssemblyInfo-cpp.AssemblyInformationalVersion`|Process `[assembly:AssemblyInformationalVersionAttribute(L"...")]` item in *.cpp* files|
+|`rc.*`                                         |Process all supported version declarations in *.rc* files                              |
+|`rc.FileVersion-param`                         |Process `FILEVERSION x,x,x,x` item in *.rc* files                                      |
+|`rc.ProductVersion-param`                      |Process `PRODUCTVERSION x,x,x,x` item in *.rc* files                                   |
+|`rc.FileVersion-string`                        |Process `VALUE "FileVersion", "..."` item in *.rc* files                               |
+|`rc.ProductVersion-string`                     |Process `VALUE "ProductVersion", "..."` item in *.rc* files                            |
 
 Examples:
 
