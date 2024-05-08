@@ -42,9 +42,13 @@ async function run() {
             filePathPattern = Core.getInput("files");
         }
         const newVersion = Core.getInput("version");
+        const pluginTagFilter = Core.getInput("tags");
         console.log(`File path pattern: ${filePathPattern}`);
         console.log(`New version: ${newVersion}`);
-        const updaterResults = await updater_1.default.update(filePathPattern, newVersion);
+        if (pluginTagFilter !== "") {
+            console.log(`Tag filter: ${pluginTagFilter}`);
+        }
+        const updaterResults = await updater_1.default.update(filePathPattern, newVersion, pluginTagFilter);
         let oldVersionString = "";
         let newVersionString = "";
         for (const updaterResult of updaterResults) {
@@ -65,7 +69,7 @@ async function run() {
     }
 }
 run();
-
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -99,23 +103,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /\[assembly:\s*AssemblyVersionAttribute\(\s*L"(.*)"\s*\)]/i;
-const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /\[assembly:\s*AssemblyFileVersionAttribute\(\s*L"(.*)"\s*\)]/i;
+const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyVersionAttribute\(\s*L"(.*)"\s*\)]/;
+const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyFileVersionAttribute\(\s*L"(.*)"\s*\)]/;
 class AssemblyInfoCppPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyVersion attribute"
             },
             {
+                tagName: "assemblyfileversion",
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "assemblyinfo-cpp";
     }
     get fileTypeName() {
         return "C++/CLI assembly info source file";
@@ -126,7 +135,7 @@ class AssemblyInfoCppPlugin extends plugin_1.default {
 }
 exports["default"] = AssemblyInfoCppPlugin;
 ;
-
+//# sourceMappingURL=assemblyinfo-cpp-plugin.js.map
 
 /***/ }),
 
@@ -160,23 +169,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /\[assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)]/i;
-const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /\[assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)]/i;
+const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)]/;
+const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)]/;
 class AssemblyInfoCsPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyVersion attribute"
             },
             {
+                tagName: "assemblyfileversion",
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "assemblyinfo-cs";
     }
     get fileTypeName() {
         return "C# assembly info source file";
@@ -187,7 +201,7 @@ class AssemblyInfoCsPlugin extends plugin_1.default {
 }
 exports["default"] = AssemblyInfoCsPlugin;
 ;
-
+//# sourceMappingURL=assemblyinfo-cs-plugin.js.map
 
 /***/ }),
 
@@ -221,23 +235,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /\[<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>]/i;
-const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /\[<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>]/i;
+const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*\[<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>]/;
+const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*\[<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>]/;
 class AssemblyInfoFsPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyVersion attribute"
             },
             {
+                tagName: "assemblyfileversion",
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "assemblyinfo-fs";
     }
     get fileTypeName() {
         return "F# assembly info source file";
@@ -248,7 +267,7 @@ class AssemblyInfoFsPlugin extends plugin_1.default {
 }
 exports["default"] = AssemblyInfoFsPlugin;
 ;
-
+//# sourceMappingURL=assemblyinfo-fs-plugin.js.map
 
 /***/ }),
 
@@ -282,23 +301,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>/i;
-const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>/i;
+const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>/;
+const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>/;
 class AssemblyInfoVbPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyVersion attribute"
             },
             {
+                tagName: "assemblyfileversion",
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "assemblyinfo-vb";
     }
     get fileTypeName() {
         return "Visual Basic assembly info source file";
@@ -309,7 +333,7 @@ class AssemblyInfoVbPlugin extends plugin_1.default {
 }
 exports["default"] = AssemblyInfoVbPlugin;
 ;
-
+//# sourceMappingURL=assemblyinfo-vb-plugin.js.map
 
 /***/ }),
 
@@ -343,35 +367,42 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
-const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
-const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
-const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
+const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
+const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
+const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
 class CsProjPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "version",
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
             },
             {
+                tagName: "versionprefix",
                 regex: VERSION_PREFIX_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<VersionPrefix> tag"
             },
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<AssemblyVersion> tag"
             },
             {
+                tagName: "fileversion",
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "csproj";
     }
     get fileTypeName() {
         return "C# project file";
@@ -381,7 +412,7 @@ class CsProjPlugin extends plugin_1.default {
     }
 }
 exports["default"] = CsProjPlugin;
-
+//# sourceMappingURL=csproj-plugin.js.map
 
 /***/ }),
 
@@ -415,35 +446,42 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
-const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
-const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
-const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
+const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
+const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
+const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
 class FsProjPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "version",
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
             },
             {
+                tagName: "versionprefix",
                 regex: VERSION_PREFIX_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<VersionPrefix> tag"
             },
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<AssemblyVersion> tag"
             },
             {
+                tagName: "fileversion",
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "fsproj";
     }
     get fileTypeName() {
         return "F# project file";
@@ -453,7 +491,7 @@ class FsProjPlugin extends plugin_1.default {
     }
 }
 exports["default"] = FsProjPlugin;
-
+//# sourceMappingURL=fsproj-plugin.js.map
 
 /***/ }),
 
@@ -487,17 +525,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
+const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
 class NuspecPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "version",
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "nuspec";
     }
     get fileTypeName() {
         return "Nuget package manifest file";
@@ -507,7 +549,7 @@ class NuspecPlugin extends plugin_1.default {
     }
 }
 exports["default"] = NuspecPlugin;
-
+//# sourceMappingURL=nuspec-plugin.js.map
 
 /***/ }),
 
@@ -516,9 +558,21 @@ exports["default"] = NuspecPlugin;
 
 "use strict";
 
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _Plugin_tags;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.VersionPartDelimiter = void 0;
 const version_utils_1 = __importDefault(__nccwpck_require__(4623));
@@ -528,21 +582,35 @@ var VersionPartDelimiter;
     VersionPartDelimiter[VersionPartDelimiter["COMMA"] = 1] = "COMMA";
 })(VersionPartDelimiter = exports.VersionPartDelimiter || (exports.VersionPartDelimiter = {}));
 class Plugin {
-    constructor(versionRegexes) {
-        this.versionRegexes = versionRegexes;
+    constructor(tags) {
+        _Plugin_tags.set(this, void 0);
+        __classPrivateFieldSet(this, _Plugin_tags, tags, "f");
     }
-    updateFile(fileContent, versionUpdateRule) {
+    get tags() {
+        return __classPrivateFieldGet(this, _Plugin_tags, "f");
+    }
+    updateFile(filePath, fileContent, versionUpdateRule, tagFilters) {
         const updatedVersions = [];
-        for (const versionRegex of this.versionRegexes) {
-            const matches = versionRegex.regex.exec(fileContent);
-            if (matches && matches.length == 2) {
+        const isMatchAllTagsFilter = tagFilters.length === 1 && tagFilters[0].tagName === "*";
+        for (const tag of __classPrivateFieldGet(this, _Plugin_tags, "f")) {
+            if (!isMatchAllTagsFilter && tagFilters.find(tagFilter => tagFilter.tagName === tag.tagName) === undefined) {
+                continue;
+            }
+            const regex = new RegExp(tag.regex, "gim");
+            const matches = regex.exec(fileContent);
+            if (matches) {
+                if (matches.length < 2) {
+                    throw new Error(`Expected to find 2 matches for regular expression "${regex}" but found only ${matches.length}.`);
+                }
+                if (regex.exec(fileContent) !== null) {
+                    throw new Error(`Too many occurrences of the ${tag.versionType} found in the file: ${filePath}`);
+                }
                 const oldVersionPatternMatch = matches[0];
                 const oldVersionString = matches[1].trim();
                 let newVersionString;
-                switch (versionRegex.versionPartDelimiter) {
+                switch (tag.versionPartDelimiter) {
                     case VersionPartDelimiter.DOT:
-                        newVersionString =
-                            version_utils_1.default.updateNonParsedVersion(oldVersionString, versionUpdateRule, version_utils_1.default.VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX, ".");
+                        newVersionString = version_utils_1.default.updateNonParsedVersion(oldVersionString, versionUpdateRule, version_utils_1.default.VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX, ".");
                         break;
                     case VersionPartDelimiter.COMMA:
                         const parsedOldVersion = version_utils_1.default.parseVersion(oldVersionString, version_utils_1.default.VERSION_NUMBER_WITH_COMMA_DELIMITER_REGEX);
@@ -550,12 +618,13 @@ class Plugin {
                         newVersionString = version_utils_1.default.formatVersion(newVersion, ",", true);
                         break;
                     default:
-                        throw new Error(`Unexpected version part delimiter: ${versionRegex.versionPartDelimiter}.`);
+                        throw new Error(`Unexpected version part delimiter: ${tag.versionPartDelimiter}.`);
                 }
                 const oldVersionPatternMatchReplacement = oldVersionPatternMatch.replace(oldVersionString, newVersionString);
-                fileContent = fileContent.replace(oldVersionPatternMatch, oldVersionPatternMatchReplacement);
+                fileContent = fileContent.substring(0, matches.index) + oldVersionPatternMatchReplacement +
+                    fileContent.substring(matches.index + oldVersionPatternMatch.length);
                 updatedVersions.push({
-                    versionType: versionRegex.versionType,
+                    versionType: tag.versionType,
                     oldVersion: oldVersionString,
                     newVersion: newVersionString
                 });
@@ -574,7 +643,8 @@ class Plugin {
     }
 }
 exports["default"] = Plugin;
-
+_Plugin_tags = new WeakMap();
+//# sourceMappingURL=plugin.js.map
 
 /***/ }),
 
@@ -610,7 +680,7 @@ const plugins = [
     new rc_plugin_1.default()
 ];
 exports["default"] = plugins;
-
+//# sourceMappingURL=plugins.js.map
 
 /***/ }),
 
@@ -644,35 +714,42 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
-const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
-const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
-const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
+const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
+const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
+const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
 class PropsPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "version",
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
             },
             {
+                tagName: "versionprefix",
                 regex: VERSION_PREFIX_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<VersionPrefix> tag"
             },
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<AssemblyVersion> tag"
             },
             {
+                tagName: "fileversion",
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "props";
     }
     get fileTypeName() {
         return "MSBuild properties file";
@@ -682,7 +759,7 @@ class PropsPlugin extends plugin_1.default {
     }
 }
 exports["default"] = PropsPlugin;
-
+//# sourceMappingURL=props-plugin.js.map
 
 /***/ }),
 
@@ -716,35 +793,42 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const FILEVERSION_REGEX = /FILEVERSION\s*(.*)/i;
-const FILEVERSION_STRING_REGEX = /VALUE\s*"FileVersion",\s*"(.*)"/i;
-const PRODUCTVERSION_REGEX = /PRODUCTVERSION\s*(.*)/i;
-const PRODUCTVERSION_STRING_REGEX = /VALUE\s*"ProductVersion",\s*"(.*)"/i;
+const FILEVERSION_REGEX = /FILEVERSION\s+(\d+,\d+,\d+,\d+)/;
+const FILEVERSION_STRING_REGEX = /VALUE\s*"FileVersion",\s*"(.*)"/;
+const PRODUCTVERSION_REGEX = /PRODUCTVERSION\s+(\d+,\d+,\d+,\d+)/;
+const PRODUCTVERSION_STRING_REGEX = /VALUE\s*"ProductVersion",\s*"(.*)"/;
 class RcPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "fileversion-param",
                 regex: FILEVERSION_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.COMMA,
                 versionType: "FILEVERSION parameter"
             },
             {
+                tagName: "fileversion-string",
                 regex: FILEVERSION_STRING_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "FileVersion string"
             },
             {
+                tagName: "productversion-param",
                 regex: PRODUCTVERSION_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.COMMA,
                 versionType: "PRODUCTVERSION parameter"
             },
             {
+                tagName: "productversion-string",
                 regex: PRODUCTVERSION_STRING_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "ProductVersion string"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "rc";
     }
     get fileTypeName() {
         return "C++ resource file";
@@ -755,7 +839,7 @@ class RcPlugin extends plugin_1.default {
 }
 exports["default"] = RcPlugin;
 ;
-
+//# sourceMappingURL=rc-plugin.js.map
 
 /***/ }),
 
@@ -789,35 +873,42 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
-const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/i;
-const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/i;
-const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/i;
-const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/i;
+const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
+const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
+const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
+const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
 class VbProjPlugin extends plugin_1.default {
     constructor() {
-        const versionRegexes = [
+        const tags = [
             {
+                tagName: "version",
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
             },
             {
+                tagName: "versionprefix",
                 regex: VERSION_PREFIX_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<VersionPrefix> tag"
             },
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<AssemblyVersion> tag"
             },
             {
+                tagName: "fileversion",
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+    get pluginName() {
+        return "vbproj";
     }
     get fileTypeName() {
         return "Visual Basic project file";
@@ -827,7 +918,31 @@ class VbProjPlugin extends plugin_1.default {
     }
 }
 exports["default"] = VbProjPlugin;
+//# sourceMappingURL=vbproj-plugin.js.map
 
+/***/ }),
+
+/***/ 839:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.VersionPartUpdateMode = exports.VersionUpdateMode = void 0;
+var VersionUpdateMode;
+(function (VersionUpdateMode) {
+    VersionUpdateMode[VersionUpdateMode["SET_EXPLICIT_VERSION"] = 0] = "SET_EXPLICIT_VERSION";
+    VersionUpdateMode[VersionUpdateMode["USE_PATTERN"] = 1] = "USE_PATTERN";
+})(VersionUpdateMode = exports.VersionUpdateMode || (exports.VersionUpdateMode = {}));
+var VersionPartUpdateMode;
+(function (VersionPartUpdateMode) {
+    VersionPartUpdateMode[VersionPartUpdateMode["LEAVE_UNCHANGED"] = 0] = "LEAVE_UNCHANGED";
+    VersionPartUpdateMode[VersionPartUpdateMode["LEAVE_UNCHANGED_SET_MISSING_TO_ZERO"] = 1] = "LEAVE_UNCHANGED_SET_MISSING_TO_ZERO";
+    VersionPartUpdateMode[VersionPartUpdateMode["BUMP"] = 2] = "BUMP";
+    VersionPartUpdateMode[VersionPartUpdateMode["OVERWRITE"] = 3] = "OVERWRITE";
+    VersionPartUpdateMode[VersionPartUpdateMode["REMOVE"] = 4] = "REMOVE";
+})(VersionPartUpdateMode = exports.VersionPartUpdateMode || (exports.VersionPartUpdateMode = {}));
+//# sourceMappingURL=version-types.js.map
 
 /***/ }),
 
@@ -844,14 +959,16 @@ const fs_1 = __nccwpck_require__(7147);
 const fast_glob_1 = __importDefault(__nccwpck_require__(3664));
 const plugins_1 = __importDefault(__nccwpck_require__(7070));
 const version_utils_1 = __importDefault(__nccwpck_require__(4623));
-async function update(filePathPattern, newVersion) {
+const filter_utils_1 = __importDefault(__nccwpck_require__(7108));
+async function update(filePathPattern, newVersion, pluginTagFilterString) {
     const trimmedFilePathPattern = filePathPattern.trim();
     if (trimmedFilePathPattern.length === 0 || trimmedFilePathPattern === "\"\"") {
         throw new Error("File path pattern is empty.");
     }
     let parsedFilePathPatterns;
     try {
-        let filePathPatternWithQuotes = trimmedFilePathPattern;
+        const filePathPatternWithForwardSlashes = trimmedFilePathPattern.replace(/\\/g, "/");
+        let filePathPatternWithQuotes = filePathPatternWithForwardSlashes;
         if (!filePathPatternWithQuotes.startsWith("\"")) {
             filePathPatternWithQuotes = `"${filePathPatternWithQuotes}"`;
         }
@@ -868,19 +985,36 @@ async function update(filePathPattern, newVersion) {
         throw new Error(`There are no files matching the specified file path pattern: ${filePathPattern}`);
     }
     const versionUpdateRule = version_utils_1.default.parseVersionUpdateRule(newVersion);
+    const pluginFilters = filter_utils_1.default.parsePluginTagFilterString(pluginTagFilterString);
+    validateFilters(pluginFilters, pluginTagFilterString !== null && pluginTagFilterString !== void 0 ? pluginTagFilterString : "");
     const result = [];
     for (const filePath of filePaths) {
-        result.push(await updateFile(filePath, versionUpdateRule));
+        const updateFileResult = await updateFile(filePath, versionUpdateRule, pluginFilters);
+        if (updateFileResult !== null) {
+            result.push(updateFileResult);
+        }
     }
     return result;
 }
-async function updateFile(filePath, versionUpdateRule) {
+async function updateFile(filePath, versionUpdateRule, pluginFilters) {
+    const isMatchAllFilter = pluginFilters.length === 1 && pluginFilters[0].pluginName === "*";
     for (const plugin of plugins_1.default) {
         if (plugin.isFileTypeSupported(filePath)) {
+            let tagFilters;
+            if (isMatchAllFilter) {
+                tagFilters = pluginFilters[0].tagFilters;
+            }
+            else {
+                const pluginFilter = pluginFilters.find(pluginFilter => pluginFilter.pluginName === plugin.pluginName);
+                if (pluginFilter === undefined) {
+                    return null;
+                }
+                tagFilters = pluginFilter.tagFilters;
+            }
             const fileContent = await fs_1.promises.readFile(filePath, "utf-8");
-            const fileUpdateResult = plugin.updateFile(fileContent, versionUpdateRule);
+            const fileUpdateResult = plugin.updateFile(filePath, fileContent, versionUpdateRule, tagFilters);
             if (fileUpdateResult === null) {
-                throw new Error(`No version information found in ${filePath}`);
+                return null;
             }
             await fs_1.promises.writeFile(filePath, fileUpdateResult.newFileContent, "utf-8");
             const result = {
@@ -893,19 +1027,120 @@ async function updateFile(filePath, versionUpdateRule) {
     }
     throw new Error(`Unsupported file type for file: ${filePath}`);
 }
+function validateFilters(filters, pluginTagFilterString) {
+    for (const pluginFilter of filters) {
+        if (pluginFilter.pluginName === "*") {
+            continue;
+        }
+        const plugin = plugins_1.default.find(plugin => plugin.pluginName === pluginFilter.pluginName);
+        if (plugin === undefined) {
+            throw new Error(`Unknown file type: '${pluginFilter.originalPluginName}' in the tag filter list: '${pluginTagFilterString}'.`);
+        }
+        for (const tagFilter of pluginFilter.tagFilters) {
+            if (tagFilter.tagName === "*") {
+                continue;
+            }
+            if (plugin.tags.find(tag => tag.tagName === tagFilter.tagName) === undefined) {
+                throw new Error(`Unknown tag: '${tagFilter.originalTagName}' for the file type: '${pluginFilter.originalPluginName}' ` +
+                    `in the tag filter list: '${pluginTagFilterString}'.`);
+            }
+        }
+    }
+}
 exports["default"] = {
     update
 };
-
+//# sourceMappingURL=updater.js.map
 
 /***/ }),
 
-/***/ 4623:
+/***/ 7108:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+function parsePluginTagFilterString(pluginTagFilterString) {
+    const result = [];
+    pluginTagFilterString = pluginTagFilterString === null || pluginTagFilterString === void 0 ? void 0 : pluginTagFilterString.trim();
+    if (pluginTagFilterString === undefined || pluginTagFilterString === "*" || pluginTagFilterString === "") {
+        result.push({
+            pluginName: "*",
+            originalPluginName: pluginTagFilterString !== null && pluginTagFilterString !== void 0 ? pluginTagFilterString : "",
+            tagFilters: [{
+                    tagName: "*",
+                    originalTagName: ""
+                }]
+        });
+    }
+    else {
+        const filterStringParts = pluginTagFilterString.split(',');
+        for (let filterStringPart of filterStringParts) {
+            filterStringPart = filterStringPart.trim();
+            if (filterStringPart === "*") {
+                throw new Error(`'*' must be the only element in the tag filter list: '${pluginTagFilterString}'.`);
+            }
+            let pluginName;
+            let pluginTag;
+            const dotPosition = filterStringPart.indexOf('.');
+            if (dotPosition !== -1) {
+                if (dotPosition === 0 || dotPosition === filterStringPart.length - 1) {
+                    throw new Error(`'${filterStringPart}' is not a valid filter in the tag filter list: '${pluginTagFilterString}'.`);
+                }
+                pluginName = filterStringPart.substring(0, dotPosition);
+                pluginTag = filterStringPart.substring(dotPosition + 1);
+            }
+            else {
+                pluginName = filterStringPart;
+                pluginTag = "*";
+            }
+            const pluginNameLowerCase = pluginName.toLowerCase();
+            const pluginTagLowerCase = pluginTag.toLowerCase();
+            let resultPluginFilter = result.find(pluginFilter => pluginFilter.pluginName === pluginNameLowerCase);
+            if (resultPluginFilter === undefined) {
+                resultPluginFilter =
+                    {
+                        pluginName: pluginNameLowerCase,
+                        originalPluginName: pluginName,
+                        tagFilters: []
+                    };
+                result.push(resultPluginFilter);
+            }
+            if (resultPluginFilter.tagFilters.find(pluginTagFilter => pluginTagFilter.tagName === pluginTagLowerCase)) {
+                throw new Error(`Duplicate filter: '${filterStringPart}' in the tag filter list: '${pluginTagFilterString}'.`);
+            }
+            else if (resultPluginFilter.tagFilters.length > 0) {
+                if (pluginTagLowerCase === "*") {
+                    throw new Error(`'${filterStringPart}' must be the only filter for the '${pluginName}' file type ` +
+                        `in the tag filter list: '${pluginTagFilterString}'.`);
+                }
+                else if (resultPluginFilter.tagFilters[0].tagName === "*") {
+                    throw new Error(`'${resultPluginFilter.originalPluginName}.*' must be the only filter ` +
+                        `for the '${resultPluginFilter.originalPluginName}' file type in the tag filter list: '${pluginTagFilterString}'.`);
+                }
+            }
+            resultPluginFilter.tagFilters.push({
+                tagName: pluginTagLowerCase,
+                originalTagName: pluginTag
+            });
+        }
+    }
+    return result;
+}
+exports["default"] = {
+    parsePluginTagFilterString
+};
+//# sourceMappingURL=filter-utils.js.map
+
+/***/ }),
+
+/***/ 4623:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const version_types_1 = __nccwpck_require__(839);
 const BUMP_MAJOR_COMMAND = "bump-major";
 const BUMP_MINOR_COMMAND = "bump-minor";
 const BUMP_BUILD_COMMAND = "bump-build";
@@ -913,19 +1148,6 @@ const BUMP_REVISION_COMMAND = "bump-revision";
 const VERSION_UPDATE_RULE_REGEX = /(\?|\*|\^|\d+)\.?(\?|\*|\^|\d+)?\.?(\?|\*|\^|\d+)?\.?(\?|\*|\^|\d+)?/;
 const VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX = /(\d+)\.?(\d+)?\.?(\d+)?\.?(\d+)?/;
 const VERSION_NUMBER_WITH_COMMA_DELIMITER_REGEX = /(\d+)\,?(\d+)?\,?(\d+)?\,?(\d+)?/;
-var VersionUpdateMode;
-(function (VersionUpdateMode) {
-    VersionUpdateMode[VersionUpdateMode["SET_EXPLICIT_VERSION"] = 0] = "SET_EXPLICIT_VERSION";
-    VersionUpdateMode[VersionUpdateMode["USE_PATTERN"] = 1] = "USE_PATTERN";
-})(VersionUpdateMode || (VersionUpdateMode = {}));
-var VersionPartUpdateMode;
-(function (VersionPartUpdateMode) {
-    VersionPartUpdateMode[VersionPartUpdateMode["LEAVE_UNCHANGED"] = 0] = "LEAVE_UNCHANGED";
-    VersionPartUpdateMode[VersionPartUpdateMode["LEAVE_UNCHANGED_SET_MISSING_TO_ZERO"] = 1] = "LEAVE_UNCHANGED_SET_MISSING_TO_ZERO";
-    VersionPartUpdateMode[VersionPartUpdateMode["BUMP"] = 2] = "BUMP";
-    VersionPartUpdateMode[VersionPartUpdateMode["OVERWRITE"] = 3] = "OVERWRITE";
-    VersionPartUpdateMode[VersionPartUpdateMode["REMOVE"] = 4] = "REMOVE";
-})(VersionPartUpdateMode || (VersionPartUpdateMode = {}));
 function parseVersionUpdateRule(input) {
     input = input.trim();
     if (input.length === 0) {
@@ -950,7 +1172,7 @@ function parseVersionUpdateRule(input) {
     if (matches && matches[0] === input) {
         result =
             {
-                updateMode: VersionUpdateMode.SET_EXPLICIT_VERSION,
+                updateMode: version_types_1.VersionUpdateMode.SET_EXPLICIT_VERSION,
                 explicitVersion: input,
                 updatePattern: null
             };
@@ -960,7 +1182,7 @@ function parseVersionUpdateRule(input) {
         if (matches && matches[0] === input) {
             result =
                 {
-                    updateMode: VersionUpdateMode.USE_PATTERN,
+                    updateMode: version_types_1.VersionUpdateMode.USE_PATTERN,
                     explicitVersion: null,
                     updatePattern: {
                         major: parseVersionPartUpdateRule(matches[1]),
@@ -973,7 +1195,7 @@ function parseVersionUpdateRule(input) {
         else {
             result =
                 {
-                    updateMode: VersionUpdateMode.SET_EXPLICIT_VERSION,
+                    updateMode: version_types_1.VersionUpdateMode.SET_EXPLICIT_VERSION,
                     explicitVersion: input,
                     updatePattern: null
                 };
@@ -982,7 +1204,7 @@ function parseVersionUpdateRule(input) {
     return result;
 }
 function updateNonParsedVersion(currentVersion, versionUpdateRule, versionNumberRegex, versionPartDelimiter) {
-    if (versionUpdateRule.updateMode === VersionUpdateMode.SET_EXPLICIT_VERSION) {
+    if (versionUpdateRule.updateMode === version_types_1.VersionUpdateMode.SET_EXPLICIT_VERSION) {
         return versionUpdateRule.explicitVersion;
     }
     else {
@@ -993,7 +1215,7 @@ function updateNonParsedVersion(currentVersion, versionUpdateRule, versionNumber
 }
 function updateParsedVersion(currentVersion, versionUpdateRule) {
     var _a;
-    if (versionUpdateRule.updateMode === VersionUpdateMode.SET_EXPLICIT_VERSION) {
+    if (versionUpdateRule.updateMode === version_types_1.VersionUpdateMode.SET_EXPLICIT_VERSION) {
         return parseVersion(versionUpdateRule.explicitVersion, VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX);
     }
     else {
@@ -1012,21 +1234,21 @@ function parseVersionPartUpdateRule(input) {
     if (input === "?") {
         result =
             {
-                updateMode: VersionPartUpdateMode.LEAVE_UNCHANGED,
+                updateMode: version_types_1.VersionPartUpdateMode.LEAVE_UNCHANGED,
                 overwriteTo: null
             };
     }
     else if (input === "*") {
         result =
             {
-                updateMode: VersionPartUpdateMode.LEAVE_UNCHANGED_SET_MISSING_TO_ZERO,
+                updateMode: version_types_1.VersionPartUpdateMode.LEAVE_UNCHANGED_SET_MISSING_TO_ZERO,
                 overwriteTo: null
             };
     }
     else if (input === "^") {
         result =
             {
-                updateMode: VersionPartUpdateMode.BUMP,
+                updateMode: version_types_1.VersionPartUpdateMode.BUMP,
                 overwriteTo: null
             };
     }
@@ -1035,14 +1257,14 @@ function parseVersionPartUpdateRule(input) {
         if (!isNaN(partNumber)) {
             result =
                 {
-                    updateMode: VersionPartUpdateMode.OVERWRITE,
+                    updateMode: version_types_1.VersionPartUpdateMode.OVERWRITE,
                     overwriteTo: partNumber
                 };
         }
         else {
             result =
                 {
-                    updateMode: VersionPartUpdateMode.REMOVE,
+                    updateMode: version_types_1.VersionPartUpdateMode.REMOVE,
                     overwriteTo: null
                 };
         }
@@ -1051,15 +1273,15 @@ function parseVersionPartUpdateRule(input) {
 }
 function getNewVersionPart(currentVersionPart, versionPartUpdateRule) {
     switch (versionPartUpdateRule.updateMode) {
-        case VersionPartUpdateMode.LEAVE_UNCHANGED:
+        case version_types_1.VersionPartUpdateMode.LEAVE_UNCHANGED:
             return currentVersionPart;
-        case VersionPartUpdateMode.LEAVE_UNCHANGED_SET_MISSING_TO_ZERO:
+        case version_types_1.VersionPartUpdateMode.LEAVE_UNCHANGED_SET_MISSING_TO_ZERO:
             return currentVersionPart !== null ? currentVersionPart : 0;
-        case VersionPartUpdateMode.BUMP:
+        case version_types_1.VersionPartUpdateMode.BUMP:
             return currentVersionPart !== null ? currentVersionPart + 1 : 1;
-        case VersionPartUpdateMode.OVERWRITE:
+        case version_types_1.VersionPartUpdateMode.OVERWRITE:
             return versionPartUpdateRule.overwriteTo;
-        case VersionPartUpdateMode.REMOVE:
+        case version_types_1.VersionPartUpdateMode.REMOVE:
             return null;
     }
 }
@@ -1105,7 +1327,7 @@ exports["default"] = {
     updateNonParsedVersion,
     updateParsedVersion
 };
-
+//# sourceMappingURL=version-utils.js.map
 
 /***/ }),
 
