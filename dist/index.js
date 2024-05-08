@@ -105,6 +105,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyVersionAttribute\(\s*L"(.*)"\s*\)]/;
 const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyFileVersionAttribute\(\s*L"(.*)"\s*\)]/;
+const ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyInformationalVersionAttribute\(\s*L"(.*)"\s*\)]/;
 class AssemblyInfoCppPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -119,6 +120,12 @@ class AssemblyInfoCppPlugin extends plugin_1.default {
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
+            },
+            {
+                tagName: "assemblyinformationalversion",
+                regex: ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "AssemblyInformationalVersion attribute"
             }
         ];
         super(tags);
@@ -171,6 +178,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)]/;
 const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)]/;
+const ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX = /^\s*\[assembly:\s*AssemblyInformationalVersion\(\s*"(.*)"\s*\)]/;
 class AssemblyInfoCsPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -185,6 +193,12 @@ class AssemblyInfoCsPlugin extends plugin_1.default {
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
+            },
+            {
+                tagName: "assemblyinformationalversion",
+                regex: ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "AssemblyInformationalVersion attribute"
             }
         ];
         super(tags);
@@ -237,6 +251,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*\[<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>]/;
 const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*\[<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>]/;
+const ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX = /^\s*\[<assembly:\s*AssemblyInformationalVersion\(\s*"(.*)"\s*\)>]/;
 class AssemblyInfoFsPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -251,6 +266,12 @@ class AssemblyInfoFsPlugin extends plugin_1.default {
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
+            },
+            {
+                tagName: "assemblyinformationalversion",
+                regex: ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "AssemblyInformationalVersion attribute"
             }
         ];
         super(tags);
@@ -303,6 +324,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const plugin_1 = __importStar(__nccwpck_require__(425));
 const ASSEMBLY_VERSION_ATTRIBUTE_REGEX = /^\s*<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>/;
 const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX = /^\s*<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>/;
+const ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX = /^\s*<assembly:\s*AssemblyInformationalVersion\(\s*"(.*)"\s*\)>/;
 class AssemblyInfoVbPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -317,6 +339,12 @@ class AssemblyInfoVbPlugin extends plugin_1.default {
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
+            },
+            {
+                tagName: "assemblyinformationalversion",
+                regex: ASSEMBLY_INFORMATIONAL_VERSION_ATTRIBUTE_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "AssemblyInformationalVersion attribute"
             }
         ];
         super(tags);
@@ -371,6 +399,7 @@ const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
 const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
+const INFORMATIONAL_VERSION_TAG_REGEX = /<InformationalVersion>(.*)<\/InformationalVersion>/;
 class CsProjPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -397,6 +426,12 @@ class CsProjPlugin extends plugin_1.default {
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
+            },
+            {
+                tagName: "informationalversion",
+                regex: INFORMATIONAL_VERSION_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<InformationalVersion> tag"
             }
         ];
         super(tags);
@@ -450,6 +485,7 @@ const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
 const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
+const INFORMATIONAL_VERSION_TAG_REGEX = /<InformationalVersion>(.*)<\/InformationalVersion>/;
 class FsProjPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -476,6 +512,12 @@ class FsProjPlugin extends plugin_1.default {
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
+            },
+            {
+                tagName: "informationalversion",
+                regex: INFORMATIONAL_VERSION_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<InformationalVersion> tag"
             }
         ];
         super(tags);
@@ -718,6 +760,7 @@ const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
 const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
+const INFORMATIONAL_VERSION_TAG_REGEX = /<InformationalVersion>(.*)<\/InformationalVersion>/;
 class PropsPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -744,6 +787,12 @@ class PropsPlugin extends plugin_1.default {
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
+            },
+            {
+                tagName: "informationalversion",
+                regex: INFORMATIONAL_VERSION_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<InformationalVersion> tag"
             }
         ];
         super(tags);
@@ -877,6 +926,7 @@ const VERSION_TAG_REGEX = /<Version>(.*)<\/Version>/;
 const VERSION_PREFIX_TAG_REGEX = /<VersionPrefix>(.*)<\/VersionPrefix>/;
 const ASSEMBLY_VERSION_TAG_REGEX = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
 const FILE_VERSION_TAG_REGEX = /<FileVersion>(.*)<\/FileVersion>/;
+const INFORMATIONAL_VERSION_TAG_REGEX = /<InformationalVersion>(.*)<\/InformationalVersion>/;
 class VbProjPlugin extends plugin_1.default {
     constructor() {
         const tags = [
@@ -903,6 +953,12 @@ class VbProjPlugin extends plugin_1.default {
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
+            },
+            {
+                tagName: "informationalversion",
+                regex: INFORMATIONAL_VERSION_TAG_REGEX,
+                versionPartDelimiter: plugin_1.VersionPartDelimiter.DOT,
+                versionType: "<InformationalVersion> tag"
             }
         ];
         super(tags);
