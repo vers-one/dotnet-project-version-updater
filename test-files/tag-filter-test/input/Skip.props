@@ -2,5 +2,8 @@
     <PropertyGroup>
         <Version>1.2.3</Version>
         <VersionPrefix>1.2.3</VersionPrefix>
+        <AssemblyVersion>1.2.3</AssemblyVersion>
+        <FileVersion>1.2.3</FileVersion>
+        <InformationalVersion>1.2.3</InformationalVersion>
     </PropertyGroup>
 </Project>

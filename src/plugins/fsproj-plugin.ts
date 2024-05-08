@@ -4,6 +4,7 @@ const VERSION_TAG_REGEX: RegExp = /<Version>(.*)<\/Version>/;
 const VERSION_PREFIX_TAG_REGEX: RegExp = /<VersionPrefix>(.*)<\/VersionPrefix>/;
 const ASSEMBLY_VERSION_TAG_REGEX: RegExp = /<AssemblyVersion>(.*)<\/AssemblyVersion>/;
 const FILE_VERSION_TAG_REGEX: RegExp = /<FileVersion>(.*)<\/FileVersion>/;
+const INFORMATIONAL_VERSION_TAG_REGEX: RegExp = /<InformationalVersion>(.*)<\/InformationalVersion>/;
 
 export default class FsProjPlugin extends Plugin
 {
@@ -34,6 +35,12 @@ export default class FsProjPlugin extends Plugin
                 regex: FILE_VERSION_TAG_REGEX,
                 versionPartDelimiter: VersionPartDelimiter.DOT,
                 versionType: "<FileVersion> tag"
+            },
+            {
+                tagName: "informationalversion",
+                regex: INFORMATIONAL_VERSION_TAG_REGEX,
+                versionPartDelimiter: VersionPartDelimiter.DOT,
+                versionType: "<InformationalVersion> tag"
             }
         ];
         super(tags);
