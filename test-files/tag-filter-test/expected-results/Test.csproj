@@ -4,5 +4,6 @@
         <VersionPrefix>1.2.3</VersionPrefix>
         <AssemblyVersion>4.5.6</AssemblyVersion>
         <FileVersion>1.2.3</FileVersion>
+        <InformationalVersion>1.2.3</InformationalVersion>
     </PropertyGroup>
 </Project>
