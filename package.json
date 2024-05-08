@@ -1,6 +1,6 @@
 {
   "name": "dotnet-project-version-updater",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A GitHub action to update or bump project versions. Supports .csproj, .props, .nuspec, and many other .NET file types.",
   "main": "lib/index.js",
   "scripts": {

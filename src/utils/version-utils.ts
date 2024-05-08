@@ -1,3 +1,6 @@
+import type { Version, VersionPartUpdateRule, VersionUpdatePattern, VersionUpdateRule } from "../types/version-types";
+import { VersionPartUpdateMode, VersionUpdateMode } from "../types/version-types";    
+
 const BUMP_MAJOR_COMMAND = "bump-major";
 const BUMP_MINOR_COMMAND = "bump-minor";
 const BUMP_BUILD_COMMAND = "bump-build";
@@ -5,50 +8,6 @@ const BUMP_REVISION_COMMAND = "bump-revision";
 const VERSION_UPDATE_RULE_REGEX: RegExp = /(\?|\*|\^|\d+)\.?(\?|\*|\^|\d+)?\.?(\?|\*|\^|\d+)?\.?(\?|\*|\^|\d+)?/;
 const VERSION_NUMBER_WITH_DOT_DELIMITER_REGEX: RegExp = /(\d+)\.?(\d+)?\.?(\d+)?\.?(\d+)?/;
 const VERSION_NUMBER_WITH_COMMA_DELIMITER_REGEX: RegExp = /(\d+)\,?(\d+)?\,?(\d+)?\,?(\d+)?/;
-
-export interface VersionUpdateRule
-{
-    updateMode: VersionUpdateMode;
-    explicitVersion: string | null;
-    updatePattern: VersionUpdatePattern | null;
-}
-
-enum VersionUpdateMode
-{
-    SET_EXPLICIT_VERSION,
-    USE_PATTERN
-}
-
-interface VersionUpdatePattern
-{
-    build: VersionPartUpdateRule;
-    major: VersionPartUpdateRule;
-    minor: VersionPartUpdateRule;
-    revision: VersionPartUpdateRule;
-}
-
-interface VersionPartUpdateRule
-{
-    updateMode: VersionPartUpdateMode;
-    overwriteTo: number | null;
-}
-
-enum VersionPartUpdateMode
-{
-    LEAVE_UNCHANGED,
-    LEAVE_UNCHANGED_SET_MISSING_TO_ZERO,
-    BUMP,
-    OVERWRITE,
-    REMOVE
-}
-
-export interface Version
-{
-    major: number;
-    minor: number | null;
-    build: number | null;
-    revision: number | null;
-}
 
 function parseVersionUpdateRule(input: string): VersionUpdateRule
 {
@@ -114,7 +73,8 @@ function parseVersionUpdateRule(input: string): VersionUpdateRule
     return result;
 }
 
-function updateNonParsedVersion(currentVersion: string, versionUpdateRule: VersionUpdateRule, versionNumberRegex: RegExp, versionPartDelimiter: string): string
+function updateNonParsedVersion(currentVersion: string, versionUpdateRule: VersionUpdateRule, versionNumberRegex: RegExp,
+    versionPartDelimiter: string): string
 {
     if (versionUpdateRule.updateMode === VersionUpdateMode.SET_EXPLICIT_VERSION)
     {

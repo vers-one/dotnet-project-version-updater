@@ -1,5 +1,6 @@
 import test, { ExecutionContext } from "ava";
-import VersionUtils, { Version, VersionUpdateRule } from "../utils/version-utils";
+import type { Version, VersionUpdateRule } from "../types/version-types";
+import VersionUtils from "../utils/version-utils";
 
 function createVersion(major: number, minor: number | null = null, build: number | null = null, revision: number | null = null): Version
 {

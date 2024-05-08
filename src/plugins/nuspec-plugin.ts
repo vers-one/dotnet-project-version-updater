@@ -1,20 +1,26 @@
-import Plugin, { PluginVersionRegex, VersionPartDelimiter } from "./plugin";
+import Plugin, { PluginTag, VersionPartDelimiter } from "./plugin";
 
-const VERSION_TAG_REGEX: RegExp = /<Version>(.*)<\/Version>/i;
+const VERSION_TAG_REGEX: RegExp = /<Version>(.*)<\/Version>/;
 
 export default class NuspecPlugin extends Plugin
 {
     constructor()
     {
-        const versionRegexes: PluginVersionRegex[] =
+        const tags: PluginTag[] =
         [
             {
+                tagName: "version",
                 regex: VERSION_TAG_REGEX,
                 versionPartDelimiter: VersionPartDelimiter.DOT,
                 versionType: "<Version> tag"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+
+    get pluginName(): string
+    {
+        return "nuspec";
     }
 
     get fileTypeName(): string

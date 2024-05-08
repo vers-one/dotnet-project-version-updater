@@ -1,26 +1,33 @@
-import Plugin, { PluginVersionRegex, VersionPartDelimiter } from "./plugin";
+import Plugin, { PluginTag, VersionPartDelimiter } from "./plugin";
 
-const ASSEMBLY_VERSION_ATTRIBUTE_REGEX: RegExp = /\[<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>]/i;
-const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX: RegExp = /\[<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>]/i;
+const ASSEMBLY_VERSION_ATTRIBUTE_REGEX: RegExp = /^\s*\[<assembly:\s*AssemblyVersion\(\s*"(.*)"\s*\)>]/;
+const ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX: RegExp = /^\s*\[<assembly:\s*AssemblyFileVersion\(\s*"(.*)"\s*\)>]/;
 
 export default class AssemblyInfoFsPlugin extends Plugin
 {
     constructor()
     {
-        const versionRegexes: PluginVersionRegex[] =
+        const tags: PluginTag[] =
         [
             {
+                tagName: "assemblyversion",
                 regex: ASSEMBLY_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: VersionPartDelimiter.DOT,
                 versionType: "AssemblyVersion attribute"
             },
             {
+                tagName: "assemblyfileversion",
                 regex: ASSEMBLY_FILE_VERSION_ATTRIBUTE_REGEX,
                 versionPartDelimiter: VersionPartDelimiter.DOT,
                 versionType: "AssemblyFileVersion attribute"
             }
         ];
-        super(versionRegexes);
+        super(tags);
+    }
+
+    get pluginName(): string
+    {
+        return "assemblyinfo-fs";
     }
 
     get fileTypeName(): string

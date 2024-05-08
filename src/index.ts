@@ -11,9 +11,14 @@ async function run(): Promise<void>
             filePathPattern = Core.getInput("files");
         }
         const newVersion: string = Core.getInput("version");
+        const pluginTagFilter: string = Core.getInput("tags");
         console.log(`File path pattern: ${filePathPattern}`);
         console.log(`New version: ${newVersion}`);
-        const updaterResults: UpdaterResult[] = await Updater.update(filePathPattern, newVersion);
+        if (pluginTagFilter !== "")
+        {
+            console.log(`Tag filter: ${pluginTagFilter}`);
+        }
+        const updaterResults: UpdaterResult[] = await Updater.update(filePathPattern, newVersion, pluginTagFilter);
         let oldVersionString: string = "";
         let newVersionString: string = "";
         for (const updaterResult of updaterResults)

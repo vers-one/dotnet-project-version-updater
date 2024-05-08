@@ -84,6 +84,67 @@ Examples:
 |1.1        |`*.*.*.*`      |1.1.0.0    |Sets the missing build and revision parts to zero, leaves the major and the minor parts unchanged                |
 |1.1        |`?.?.?.?`      |1.1        |Leaves all parts unchanged                                                                                       |
 
+### `tags` (optional)
+
+Comma-separated list of version tags to process.
+
+Allows to refine the `file` / `files` filter to exclude the unwanted version declarations found in the matching files. The values in the list are not case-sensitive, extra spaces between the values are trimmed.
+
+**Default**: `*`
+
+Supported tags:
+
+|Tag                                   |Description                                                                   |
+|--------------------------------------|------------------------------------------------------------------------------|
+|`*`                                   |Process all supported version declarations in all supported file types        |
+|`csproj.*`                            |Process all supported version declarations in *.csproj* files                 |
+|`csproj.Version`                      |Process `<Version>...</Version>` item in *.csproj* files                      |
+|`csproj.VersionPrefix`                |Process `<VersionPrefix>...</VersionPrefix>` item in *.csproj* files          |
+|`csproj.AssemblyVersion`              |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.csproj* files      |
+|`csproj.FileVersion`                  |Process `<FileVersion>...</FileVersion>` item in *.csproj* files              |
+|`vbproj.*`                            |Process all supported version declarations in *.vbproj* files                 |
+|`vbproj.Version`                      |Process `<Version>...</Version>` item in *.vbproj* files                      |
+|`vbproj.VersionPrefix`                |Process `<VersionPrefix>...</VersionPrefix>` item in *.vbproj* files          |
+|`vbproj.AssemblyVersion`              |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.vbproj* files      |
+|`vbproj.FileVersion`                  |Process `<FileVersion>...</FileVersion>` item in *.vbproj* files              |
+|`fsproj.*`                            |Process all supported version declarations in *.fsproj* files                 |
+|`fsproj.Version`                      |Process `<Version>...</Version>` item in *.fsproj* files                      |
+|`fsproj.VersionPrefix`                |Process `<VersionPrefix>...</VersionPrefix>` item in *.fsproj* files          |
+|`fsproj.AssemblyVersion`              |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.fsproj* files      |
+|`fsproj.FileVersion`                  |Process `<FileVersion>...</FileVersion>` item in *.fsproj* files              |
+|`props.*`                             |Process all supported version declarations in *.props* files                  |
+|`props.Version`                       |Process `<Version>...</Version>` item in *.props* files                       |
+|`props.VersionPrefix`                 |Process `<VersionPrefix>...</VersionPrefix>` item in *.props* files           |
+|`props.AssemblyVersion`               |Process `<AssemblyVersion>...</AssemblyVersion>` item in *.props* files       |
+|`props.FileVersion`                   |Process `<FileVersion>...</FileVersion>` item in *.props* files               |
+|`nuspec.*`                            |Process all supported version declarations in *.nuspec* files                 |
+|`nuspec.Version`                      |Process `<Version>...</Version>` item in *.nuspec* files                      |
+|`AssemblyInfo-cs.*`                   |Process all supported version declarations in *.cs* files                     |
+|`AssemblyInfo-cs.AssemblyVersion`     |Process `[assembly: AssemblyVersion("...")]` item in *.cs* files              |
+|`AssemblyInfo-cs.AssemblyFileVersion` |Process `[assembly: AssemblyFileVersion("...")]` item in *.cs* files          |
+|`AssemblyInfo-vb.*`                   |Process all supported version declarations in *.vb* files                     |
+|`AssemblyInfo-vb.AssemblyVersion`     |Process `<Assembly: AssemblyVersion("...")>` item in *.vb* files              |
+|`AssemblyInfo-vb.AssemblyFileVersion` |Process `<Assembly: AssemblyFileVersion("...")>` item in *.vb* files          |
+|`AssemblyInfo-fs.*`                   |Process all supported version declarations in *.fs* files                     |
+|`AssemblyInfo-fs.AssemblyVersion`     |Process `[<assembly: AssemblyVersion("...")>]` item in *.fs* files            |
+|`AssemblyInfo-fs.AssemblyFileVersion` |Process `[<assembly: AssemblyFileVersion("...")>]` item in *.fs* files        |
+|`AssemblyInfo-cpp.*`                  |Process all supported version declarations in *.cpp* files                    |
+|`AssemblyInfo-cpp.AssemblyVersion`    |Process `[assembly:AssemblyVersionAttribute(L"...")]` item in *.cpp* files    |
+|`AssemblyInfo-cpp.AssemblyFileVersion`|Process `[assembly:AssemblyFileVersionAttribute(L"...")]` item in *.cpp* files|
+|`rc.*`                                |Process all supported version declarations in *.rc* files                     |
+|`rc.FileVersion-param`                |Process `FILEVERSION x,x,x,x` item in *.rc* files                             |
+|`rc.ProductVersion-param`             |Process `PRODUCTVERSION x,x,x,x` item in *.rc* files                          |
+|`rc.FileVersion-string`               |Process `VALUE "FileVersion", "..."` item in *.rc* files                      |
+|`rc.ProductVersion-string`            |Process `VALUE "ProductVersion", "..."` item in *.rc* files                   |
+
+Examples:
+
+|`tags` input                                               |Explanation                                                                                                                                                                                                   |
+|-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|`AssemblyInfo-cs.AssemblyVersion`                          |Process only *.cs* files and only `[assembly: AssemblyVersion("...")]` items in those files                                                                                                                   |
+|`csproj.Version, csproj.AssemblyVersion`                   |Process only *.csproj* files and only `<Version>...</Version>` and `<AssemblyVersion>...</AssemblyVersion>` items in those files                                                                              |
+|`csproj.Version, AssemblyInfo-cs.AssemblyVersion, nuspec.*`|Process only `<Version>...</Version>` items in *.csproj* files, `[assembly: AssemblyVersion("...")]` items in *.cs* files, and all supported version declarations in `.nuspec` files, and skip everything else|
+
 ## Outputs
 
 ### `oldVersion`
@@ -123,7 +184,7 @@ jobs:
 
       - name: Set MyProject.csproj version
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.5
+        uses: vers-one/dotnet-project-version-updater@v1.6
         with:
           file: "src/MyProject.csproj"
           version: ${{ github.event.inputs.version }}
@@ -159,7 +220,7 @@ jobs:
 
       - name: Set project versions
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.5
+        uses: vers-one/dotnet-project-version-updater@v1.6
         with:
           file: |
             "**/*.csproj", "**/*.nuspec", "**/AssemblyInfo.cs"
@@ -203,7 +264,7 @@ jobs:
 
       - name: Bump build version
         id: bump
-        uses: vers-one/dotnet-project-version-updater@v1.5
+        uses: vers-one/dotnet-project-version-updater@v1.6
         with:
           file: "src/MyProject.csproj"
           version: bump-build
@@ -218,31 +279,6 @@ jobs:
 
 ## Additional notes
 
-* This action searches for the following version declarations:
-  * for .csproj, .vbproj, .fsproj, and .props files:
-    * `<Version>...</Version>`;
-    * `<VersionPrefix>...</VersionPrefix>`;
-    * `<AssemblyVersion>...</AssemblyVersion>`;
-    * `<FileVersion>...</FileVersion>`;
-  * for .nuspec files:
-    * `<Version>...</Version>`;
-  * for .cs files:
-    * `[assembly: AssemblyVersion("...")]`;
-    * `[assembly: AssemblyFileVersion("...")]`;
-  * for .vb files:
-    * `<Assembly: AssemblyVersion("...")>`;
-    * `<Assembly: AssemblyFileVersion("...")>`;
-  * for .fs files:
-    * `[<assembly: AssemblyVersion("...")>]`;
-    * `[<assembly: AssemblyFileVersion("...")>]`;
-  * for .cpp files:
-    * `[assembly:AssemblyVersionAttribute(L"...")]`;
-    * `[assembly:AssemblyFileVersionAttribute(L"...")]`;
-  * for .rc files:
-    * `FILEVERSION x,x,x,x`;
-    * `PRODUCTVERSION x,x,x,x`;
-    * `VALUE "FileVersion", "..."`
-    * `VALUE "ProductVersion", "..."`.
-* If you set the new version explicitly, you can use any string as a version number (e.g. `1.2.3`, `1.0.0-beta5`, `Vista`, `blah-blah`, etc). However if you use one of the bump commands or a bump pattern, the existing version must by in the following format: *major[.minor[.build[.revision]]]*.
+* If you set the new version explicitly, you can use any string as a version number (e.g. `1.2.3`, `1.0.0-beta5`, `Vista`, `blah-blah`, etc). However, if you use one of the bump commands or a bump pattern, the existing version must by in the following format: *major[.minor[.build[.revision]]]*.
 * Keep in mind that .NET Framework assembly versions [must be](https://docs.microsoft.com/en-us/dotnet/api/system.version#remarks) in the following format: *major.minor[.build[.revision]]*. Any other versions formats like `1.0.0-beta5` will cause a compilation failure.
 * C++ resource files [require](https://learn.microsoft.com/en-us/windows/win32/menurc/versioninfo-resource#parameters) `FILEVERSION` and `PRODUCTVERSION` resource parameters to have all four version components (*major.minor.build.revision*).
