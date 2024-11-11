@@ -11,6 +11,9 @@ inputs:
   version:
     description: "New version"
     required: true
+  tags:
+    description: "Comma-separated list of version tags to process"
+    required: false
 outputs:
   oldVersion:
     description: "Version found in the file before the update"
