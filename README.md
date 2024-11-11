@@ -192,7 +192,7 @@ jobs:
 
       - name: Set MyProject.csproj version
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.6
+        uses: vers-one/dotnet-project-version-updater@v1.7
         with:
           file: "src/MyProject.csproj"
           version: ${{ github.event.inputs.version }}
@@ -228,7 +228,7 @@ jobs:
 
       - name: Set project versions
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.6
+        uses: vers-one/dotnet-project-version-updater@v1.7
         with:
           file: |
             "**/*.csproj", "**/*.nuspec", "**/AssemblyInfo.cs"
@@ -272,7 +272,7 @@ jobs:
 
       - name: Bump build version
         id: bump
-        uses: vers-one/dotnet-project-version-updater@v1.6
+        uses: vers-one/dotnet-project-version-updater@v1.7
         with:
           file: "src/MyProject.csproj"
           version: bump-build
